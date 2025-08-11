@@ -1,0 +1,34 @@
+curl -XGET 127.0.0.1:9200/movies/_mapping?pretty
+
+curl -XPUT 127.0.0.1:9200/movies_v2 -d '
+{
+    "mappings" : {
+      "properties" : {
+        "genre" : {
+          "type" : "keyword"
+        },
+        "id" : {
+          "type" : "integer"
+        },
+        "title" : {
+          "type" : "text",
+          "analyzer" : "english"
+        },
+        "year" : {
+          "type" : "integer"
+        }
+      }
+    }
+}
+'
+
+curl -XGET 127.0.0.1:9200/movies_v2/_mapping?pretty
+
+curl -XPOST 127.0.0.1:9200/_reindex -d '
+{
+    "source": {"index": "movies"},
+    "dest": {"index": "movies_v2"}
+}
+'
+
+curl -XGET 127.0.0.1:9200/movies_v2/_search?mapping

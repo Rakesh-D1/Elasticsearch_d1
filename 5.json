@@ -1,0 +1,65 @@
+Any movie with "Star Trek" in title , howw to search this ?
+
+curl -XGET 127.0.0.1:9200/movies/_search?pretty -d '
+{
+    "query" : {
+        "match" : {
+             "title" : "Star Trek"
+        }
+    }
+}
+'
+
+curl -XGET 127.0.0.1:9200/movies/_search?pretty -d '
+{
+    "query" : {
+        "match_phrase" : {
+             "genre" : "sci"
+        }
+    }
+}
+'
+curl -XDELETE 127.0.0.1:9200/movies
+
+curl -XPUT 127.0.0.1:9200/movies -d '
+{
+    "mappings": {
+        "properties": {
+            "id": {"type": "integer"} ,
+            "year" : {"type": "date"} ,
+            "genre" : {"type": "keyword"} ,
+            "title": {"type": "text", "analyzer": "english"}
+        }
+    }
+}
+'
+
+curl -XGET 127.0.0.1:9200/movies/_search?pretty -d '
+{
+    "query" : {
+        "match_phrase" : {
+             "genre" : "Sci"
+        }
+    }
+}
+'
+
+curl -XGET 127.0.0.1:9200/movies/_search?pretty -d '
+{
+    "query" : {
+        "match_phrase" : {
+             "genre" : "Sci-Fi"
+        }
+    }
+}
+'
+
+curl -XGET 127.0.0.1:9200/movies/_search?pretty -d '
+{
+    "query" : {
+        "match" : {
+             "title" : "star wars"
+        }
+    }
+}
+'

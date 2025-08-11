@@ -1,0 +1,28 @@
+curl -XGET 127.0.0.1:9200/movies/_search?pretty -d '
+{
+    "query" : {
+        "match" : {
+             "title" : "star"
+        }
+    }
+}
+'
+
+
+curl -XGET "127.0.0.1:9200/movies/_search?q=title:star"
+
+curl -XGET "127.0.0.1:9200/movies/_search?q=title:star&pretty"
+
+----------------- # USE CASE - Movie year after a purticular year & in title 'trek' keyword is used - --------------------------------------------
+
+curl -XGET "127.0.0.1:9200/movies/_search?q=+year>2010+title:trek&pretty"
+
+
+curl -XGET "127.0.0.1:9200/movies/_search?q=+year>2017+title:trek&pretty"
+
+
+https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search
+
+
+
+
