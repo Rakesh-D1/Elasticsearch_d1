@@ -1,0 +1,86 @@
+curl -XGET 127.0.0.1:9200/movies/_search?pretty -d '
+{
+    "query" : {
+        "match" : {
+             "title" : "Interstellar"
+        }
+    }
+}
+'
+curl -XGET 127.0.0.1:9200/movies/_search?pretty -d '
+{
+    "query" : {
+        "match" : {
+             "title" : "Intersteller"
+        }
+    }
+}
+'
+curl -XGET 127.0.0.1:9200/movies/_search?pretty -d '
+{
+    "query": {
+        "fuzzy": {
+            "title": {
+                "value": "Intersteller",
+                "fuzziness": 1
+            }
+        }
+    }
+}'
+
+curl -XGET 127.0.0.1:9200/movies/_search?pretty -d '
+{
+    "query": {
+        "fuzzy": {
+            "title": {
+                "value": "Intersteller",
+                "fuzziness": 2
+            }
+        }
+    }
+}'
+
+curl -XGET 127.0.0.1:9200/movies/_search?pretty -d '
+{
+    "query": {
+        "fuzzy": {
+            "title": {
+                "value": "Intersteller",
+                "fuzziness": 0
+            }
+        }
+    }
+}'
+
+curl -XGET 127.0.0.1:9200/movies/_search?pretty -d '
+{
+    "query": {
+        "fuzzy": {
+            "title": {"value": "intersteller", "fuzziness": 1 }
+        }
+    }
+}'
+
+curl -XGET 127.0.0.1:9200/movies/_search?pretty -d '
+{
+    "query": {
+        "fuzzy": {
+            "title": {
+                "value": "intersteller",
+                "fuzziness": 1
+            }
+        }
+    }
+}'
+
+curl -XGET 127.0.0.1:9200/movies/_search?pretty -d '
+{
+    "query": {
+        "fuzzy": {
+            "title": {
+                "value": "warz",
+                "fuzziness": 1
+            }
+        }
+    }
+}'

@@ -1,0 +1,243 @@
+curl -XGET "127.0.0.1:9200/movies/_search?pretty" -d '
+{
+    "query": {
+        "match_phrase": {
+            "title": "star wars"
+        }
+    }
+}
+'
+
+curl -XGET "127.0.0.1:9200/movies/_search?pretty" -d '
+{
+    "query": {
+        "match_phrase": {
+            "title": "STAR WARS"
+        }
+    }
+}
+'
+
+curl -XGET "127.0.0.1:9200/movies/_search?pretty" -d '
+{
+    "query": {
+        "match_phrase": {
+            "title": "sTAr WaRs"
+        }
+    }
+}
+'
+
+curl -XGET "127.0.0.1:9200/movies/_search?pretty" -d '
+{
+    "query": {
+        "match_phrase": {
+            "title": {"query": "star beyond"}
+        }
+    }
+}
+'
+
+curl -XGET "127.0.0.1:9200/movies/_search?pretty" -d '
+{
+    "query": {
+        "match_phrase": {
+            "title": {"query": "star beyond", "slop": 0}
+        }
+    }
+}
+'
+curl -XGET "127.0.0.1:9200/movies/_search?pretty" -d '
+{
+    "query": {
+        "match_phrase": {
+            "title": {"query": "star beyond", "slop": 1}
+        }
+    }
+}
+'
+curl -XGET "127.0.0.1:9200/movies/_search?pretty" -d '
+{
+    "query": {
+        "match_phrase": {
+            "title": {"query": "trek beyond", "slop": 0}
+        }
+    }
+}
+'
+Plan 9 from Outer Space
+
+curl -XGET "127.0.0.1:9200/movies/_search?pretty" -d '
+{
+    "query": {
+        "match_phrase": {
+            "title": {"query": "Plan from", "slop": 0}
+        }
+    }
+}'
+
+curl -XGET "127.0.0.1:9200/movies/_search?pretty" -d '
+{
+    "query": {
+        "match_phrase": {
+            "title": {"query": "Plan from", "slop": 1}
+        }
+    }
+}'
+
+curl -XGET "127.0.0.1:9200/movies/_search?pretty" -d '
+{
+    "query": {
+        "match_phrase": {
+            "title": {"query": "Plan Outer", "slop": 1}
+        }
+    }
+}'
+
+curl -XGET "127.0.0.1:9200/movies/_search?pretty" -d '
+{
+    "query": {
+        "match_phrase": {
+            "title": {"query": "Plan Outer", "slop": 2}
+        }
+    }
+}'
+
+curl -XGET "127.0.0.1:9200/movies/_search?pretty" -d '
+{
+    "query": {
+        "match_phrase": {
+            "title": {"query": "Plan Space", "slop": 2}
+        }
+    }
+}'
+
+Plan 9 from Outer Space
+
+curl -XGET "127.0.0.1:9200/movies/_search?pretty" -d '
+{
+    "query": {
+        "match_phrase": {
+            "title": {"query": "Plan Space", "slop": 4}
+        }
+    }
+}'
+
+curl -XGET "127.0.0.1:9200/movies/_search?pretty" -d '
+{
+    "query": {
+        "match_phrase": {
+            "title": {"query": "Plan Space", "slop": 3}
+        }
+    }
+}'
+
+curl -XGET "127.0.0.1:9200/movies/_search?pretty" -d '
+{
+    "query": {
+        "match_phrase": {
+            "title": {"query": "Plan Space", "slop": 2}
+        }
+    }
+}'
+
+curl -XGET "127.0.0.1:9200/movies/_search?pretty" -d '
+{
+    "query": {
+        "match_phrase": {
+            "title": {"query": "Space Plan", "slop": 3}
+        }
+    }
+}'
+
+curl -XGET "127.0.0.1:9200/movies/_search?pretty" -d '
+{
+    "query": {
+        "match_phrase": {
+            "title": {"query": "Space Plan", "slop": 100}
+        }
+    }
+}'
+
+curl -XGET "127.0.0.1:9200/movies/_search?pretty" -d '
+{
+    "query": {
+        "match_phrase": {
+            "title": {"query": "Space Plan", "slop": 5}
+        }
+    }
+}'
+
+--------------------------------------------------------------------------------------------
+
+EXERCISE
+
+1. search Star wars 
+2. After 1980
+    a. URI search 
+    b. Request body serach 
+
+ANSWER
+    a. curl -XGET "127.0.0.1:9200/movies/_search?q=+year:>1980+title:star wars&pretty"
+    curl -XGET "127.0.0.1:9200/movies/_search?q=+year:>1980+title:star%20wars&pretty"  
+    curl -XGET "127.0.0.1:9200/movies/_search?q=%2Byear%3A%3E1980%2Btitle%3Astar%20wars&pretty"  
+
+    curl -XGET "127.0.0.1:9200/movies/_search?q=+year>1980+title:star%20wars&pretty"
+    curl -XGET "127.0.0.1:9200/movies/_search?q=%2Byear%3E1980%2Btitle%3Astar%20wars&pretty"
+        
+    curl -XGET "127.0.0.1:9200/movies/_search?q=+year>1980+title:star%20wars&pretty"
+    curl -XGET "127.0.0.1:9200/movies/_search?q=%2Byear%3E1980%2Btitle%3Astar%20wars&pretty"
+
+     curl -XGET "127.0.0.1:9200/movies/_search?q=+year:>1980+title:star wars&pretty"
+     curl -XGET "127.0.0.1:9200/movies/_search?q=+year:>1980+title:star%20wars&pretty"
+     curl -XGET "127.0.0.1:9200/movies/_search?q=%2Byear%3A%3E1980%2Btitle%3Astar%20wars&pretty"
+     curl -XGET "127.0.0.1:9200/movies/_search?q=%2Byear%3A%3E1980+title%3Astar%20wars&pretty"
+     curl -XGET "127.0.0.1:9200/movies/_search?q=%2Byear%3A%3E1980+%2Btitle%3Astar%20wars&pretty"
+
+     curl -XGET "127.0.0.1:9200/movies/_search?q=+year>:1980+title:star%20wars&pretty"
+     curl -XGET "127.0.0.1:9200/movies/_search?q=%2Byear%3E:1980+title:star%20wars&pretty"
+
+     
+    b. 
+curl -XGET "127.0.0.1:9200/movies/_search?pretty" -d '
+{
+    "query": {
+        "bool": {
+            "must": {"match_phrase": {"title": "star wars"}},
+            "filter": {"range": {"year": {"gt": "1980"}}}
+        }
+    }
+}
+'
+
+curl -XGET "127.0.0.1:9200/movies/_search?pretty" -d '
+{
+    "query": {
+        "bool": {
+            "must": {"match_phrase": {"title": "star wars"}},
+            "filter": {"range": {"year": {"gt": "2016"}}}
+        }
+    }
+}
+'
+
+curl -XGET "127.0.0.1:9200/movies/_search?pretty" -d '
+{
+    "query": {
+        "bool": {
+            "must": {"match_phrase": {"title": "star wars"}},
+            "filter": {"range": {"year": {"gte": "2015"}}}
+        }
+    }
+}
+'
+curl -XGET "127.0.0.1:9200/movies/_search?pretty" -d '
+{
+    "query": {
+        "bool": {
+            "must": {"match_phrase": {"title": "star wars"}},
+            "filter": {"range": {"year": {"gt": "2015"}}}
+        }
+    }
+}
+'

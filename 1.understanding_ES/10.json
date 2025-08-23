@@ -1,0 +1,45 @@
+curl --request PUT 'localhost:9200/microservice-logs' --data-raw '
+{
+    "mappings": {
+        "properties": {
+            "timestamp": {"type": "date"},
+            "service": {"type": "keyword"},
+            "host_ip": {"type": "ip"},
+            "port": {"type": "integer"},
+            "message": {"type": "text"}
+        }
+    }
+}
+'
+
+curl --request POST  'localhost:9200/microservice-logs/_doc?pretty' --data-raw '
+{
+    "timestamp": "2020-04-11T12:34:56.789Z", "service": "XYZ", "host_ip": "10.0.2.15", "port": 17000, "message": "Input port Integer value" 
+}
+'
+
+
+curl --request GET  'localhost:9200/microservice-logs/_search?pretty'
+
+curl --request GET  'localhost:9200/microservice-logs/_doc/61YaaZgB4w5yyFdWQOAR?pretty'
+
+curl --request POST  'localhost:9200/microservice-logs/_doc?pretty' --data-raw '
+{
+    "timestamp": "2020-04-11T12:34:56.789Z", "service": "XYZ", "host_ip": "10.0.2.15", "port": "15000", "message": "Input port String value" 
+}
+'
+
+curl --request POST  'localhost:9200/microservice-logs/_doc?pretty' --data-raw '
+{
+    "timestamp": "2020-04-11T12:34:56.789Z", "service": "XYZ", "host_ip": "10.0.2.15", "port": "none", "message": "Invalid port value" 
+}
+'
+
+curl --request GET  'localhost:9200/microservice-logs/_doc/7VYkaZgB4w5yyFdWIuCv?pretty'
+
+curl --request GET  'localhost:9200/microservice-logs/_search?pretty'
+
+
+curl --request POST 'localhost:9200/microservice-logs/_close?pretty'
+
+curl 

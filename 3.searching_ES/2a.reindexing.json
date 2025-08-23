@@ -1,0 +1,146 @@
+curl -XGET "127.0.0.1:9200/movies/_search?pretty" -d '
+{
+    "query": {
+        "bool": {
+            "must": {"term": {"title.keyword": "trek"}},
+            "filter": {"range": {"year": {"gte": "2017"}}}
+        }
+    }
+}
+'
+
+curl -XGET "127.0.0.1:9200/movies_v2/_search?pretty" -d '
+{
+    "query": {
+        "bool": {
+            "must": {"term": {"title.keyword": "trek"}},
+            "filter": {"range": {"year": {"gte": "2017"}}}
+        }
+    }
+}
+'
+
+curl -XPUT 127.0.0.1:9200/movies_v3 -d '
+{
+    "mappings" : {
+      "properties" : {
+        "genre" : {
+          "type" : "keyword"
+        },
+        "id" : {
+          "type" : "integer"
+        },
+        "title" : {
+          "type" : "text",
+          "analyzer" : "english"
+        },
+        "year" : {
+          "type" : "integer"
+        }
+      }
+    }
+}
+'
+
+/usr/bin/curl  -H "Content-Type: application/x-ndjson" -XPUT 127.0.0.1:9200/_bulk?pretty --data-binary @movies_v3.json
+
+
+curl -XGET 127.0.0.1:9200/movies_v3/_search?pretty
+
+curl -XGET "127.0.0.1:9200/movies_v3/_search?q=+year>2010+title:trek&pretty"
+
+curl -XGET "127.0.0.1:9200/movies_v3/_search?q=+year>2017+title:trek&pretty"
+
+curl -XGET 127.0.0.1:9200/movies_v3/_mapping?pretty
+
+curl -XGET "127.0.0.1:9200/movies_v3/_search?pretty" -d '
+{
+    "query": {
+        "bool": {
+            "must": {"term": {"title": "trek"}},
+            "filter": {"range": {"year": {"gt": "2010"}}}
+        }
+    }
+}
+'
+curl -XGET "127.0.0.1:9200/movies_v3/_search?pretty" -d '
+{
+    "query": {
+        "bool": {
+            "must": {"term": {"title": "trek"}},
+            "filter": {"range": {"year": {"gte": "2012"}}}
+        }
+    }
+}
+'
+
+curl -XGET "127.0.0.1:9200/movies_v3/_search?pretty" -d '
+{
+    "query": {
+        "bool": {
+            "must": {"term": {"title": "trek"}},
+            "filter": {"range": {"year": {"gt": "2016"}}}
+        }
+    }
+}
+'
+curl -XGET "127.0.0.1:9200/movies_v3/_search?pretty" -d '
+{
+    "query": {
+        "bool": {
+            "must": {"term": {"title": "trek"}},
+            "filter": {"range": {"year": {"gte": "2016"}}}
+        }
+    }
+}
+'
+curl -XGET "127.0.0.1:9200/movies_v3/_search?pretty" -d '
+{
+    "query": {
+        "bool": {
+            "must": {"term": {"title": "trek"}},
+            "filter": {"range": {"year": {"gt": "2017"}}}
+        }
+    }
+}
+'
+
+curl -XGET "127.0.0.1:9200/movies/_search?pretty" -d '
+{
+    "query": {
+        "bool": {
+            "must": {"term": {"title": "trek"}},
+            "filter": {"range": {"year": {"gt": "2017"}}}
+        }
+    }
+}
+'
+
+curl -XGET "127.0.0.1:9200/movies/_search?pretty" -d '
+{
+    "query": {
+        "bool": {
+            "must": {"term": {"title": "trek"}},
+            "filter": {"range": {"year": {"gt": "2010"}}}
+        }
+    }
+}
+'
+curl -XGET "127.0.0.1:9200/movies/_search?q=+year>2017+title:trek&pretty"
+curl -XGET "127.0.0.1:9200/movies/_search?q=+year%3E2017+title:trek&pretty"
+curl -XGET "127.0.0.1:9200/movies/_search?q=%2Byear%3E2017%2Btitle:trek&pretty"
+
+curl -XGET "127.0.0.1:9200/movies/_search?pretty" -d '
+{
+    "size": 1,
+    "_source": ["year"],
+    "script_fields":{
+        "epoch_ms":{
+            "script":{
+                "source": "doc[\"year\"].value.toInstant().toEpochMilli()"
+            }
+        }
+    }
+}
+'
+	

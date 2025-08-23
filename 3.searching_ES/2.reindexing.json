@@ -32,3 +32,9 @@ curl -XPOST 127.0.0.1:9200/_reindex -d '
 '
 
 curl -XGET 127.0.0.1:9200/movies_v2/_search?mapping
+
+curl -XGET "127.0.0.1:9200/movies_v2/_search?q=+year>2017+title:trek&pretty"
+
+
+curl -XGET "127.0.0.1:9200/movies_v2/_search?q=+year>2010+title:trek&pretty"
+
