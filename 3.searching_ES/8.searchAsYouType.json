@@ -1,0 +1,27 @@
+curl -XGET "127.0.0.1:9200/movies/_search?pretty" -d '
+{
+    "query": {
+        "match_phrase_prefix": {
+            "title": {"query": "star", "slop": 10}
+        }
+    }
+}'
+
+curl -XGET "127.0.0.1:9200/movies/_search?pretty" -d '
+{
+    "query": {
+        "match_phrase_prefix": {
+            "title": {"query": "star t", "slop": 10}
+        }
+    }
+}'
+
+curl -XGET "127.0.0.1:9200/movies/_search?pretty" -d '
+{
+    "query": {
+        "match_phrase_prefix": {
+            "title": {"query": "star tr", "slop": 10}
+        }
+    }
+}'
+
