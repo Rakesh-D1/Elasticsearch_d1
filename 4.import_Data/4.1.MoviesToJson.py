@@ -16,9 +16,3 @@ for movie in reader:
             print("\"", genre, "\",", end='', sep='')
         print("\"", genres[-1], "\"", end = '', sep='')
         print ("] }")
-
-
-movieId,title,genres
-1,Toy Story (1995),Adventure|Animation|Children|Comedy|Fantasy
-
-{ "id": "1", "title": "Toy Story", "year":1995, "genre": [
