@@ -1,0 +1,6 @@
+curl -XGET "localhost:9200/demo-grok-multiple/_search?pretty" -d'
+{
+  "_source": {
+    "excludes": ["@timestamp", "host", "path"]
+  }
+}'
