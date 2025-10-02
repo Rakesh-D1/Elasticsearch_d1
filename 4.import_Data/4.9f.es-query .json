@@ -4,3 +4,18 @@ curl -XGET "localhost:9200/demo-grok-multiple/_search?pretty" -d'
     "excludes": ["@timestamp", "host", "path"]
   }
 }'
+
+
+curl -XGET "localhost:9200/demo-grok-multiple/_search?pretty" -d'
+{
+  "track_total_hits": true,
+  "query": {
+    "bool": {
+      "must":{
+        "term":{
+          "tags.keyword": "_grokparsefailure"
+        }
+      }
+    }
+  }
+}'
