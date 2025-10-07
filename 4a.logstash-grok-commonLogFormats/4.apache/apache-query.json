@@ -1,0 +1,16 @@
+curl -XGET "http://localhost:9200/apache-logs/_search?pretty" -d'
+{
+    "size": 1,
+    "track_total_hits": true,
+    "query": {
+     "bool": {
+      "must_not": [
+        {
+          "term": {
+            "tags.keyword": "_grokparsefailure"
+          }
+        }
+      ]
+    }
+  }
+}'
