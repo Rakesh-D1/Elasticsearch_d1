@@ -1,0 +1,16 @@
+curl -XGET "http://localhost:9200/mysql-slowlogs-01/_search?pretty" -d'{
+ 
+  "size":1,
+  "query": {
+    "bool": {
+    "must_not": [
+      {
+        "term": {
+          "tags.keyword": "_grokparsefailure"
+        }
+      }
+    ]
+  }
+  }
+ 
+}'

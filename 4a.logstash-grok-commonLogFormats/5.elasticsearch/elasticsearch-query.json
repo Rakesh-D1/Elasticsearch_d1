@@ -1,0 +1,29 @@
+curl -XGET "http://localhost:9200/es-test-logs/_search?pretty" -d'{
+  "size": 1,
+  "query": {
+    "bool": {
+      "must_not": [
+        {
+          "match": {
+            "tags": "multiline"
+          }
+        }
+      ]
+    }
+  }
+}'
+
+curl -XGET "http://localhost:9200/es-test-logs/_search?pretty" -d'{
+  "size": 1,
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match": {
+            "tags": "multiline"
+          }
+        }
+      ]
+    }
+  }
+}'
