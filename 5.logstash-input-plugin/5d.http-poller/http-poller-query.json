@@ -1,0 +1,16 @@
+curl -XGET "localhost:9200/http-poller-external-api/_search?pretty=true" -d '
+{
+  "query": {
+    "match_all": {}
+  },
+  "size": 1,
+  "sort": [
+    {
+      "@timestamp": {
+        "order": "desc"
+      }
+    }
+  ]
+}'
+
+curl -XGET "localhost:9200/http-poller-health-status/_search?pretty=true"
